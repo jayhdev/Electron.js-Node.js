@@ -1,6 +1,5 @@
-'use strict';
 const path = require('path');
-const {app, Menu, shell} = require('electron');
+const { app, Menu, shell } = require('electron');
 const {
 	is,
 	appMenu,
