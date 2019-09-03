@@ -5,15 +5,15 @@ const { is } = require('electron-util');
 const unhandled = require('electron-unhandled');
 const debug = require('electron-debug');
 const contextMenu = require('electron-context-menu');
-const config = require('./config');
-const menu = require('./menu');
+const config = require('./src/config');
+const menu = require('./src/menu');
 
 unhandled();
 debug();
 contextMenu();
 
 // Note: Must match `build.appId` in package.json
-app.setAppUserModelId('com.company.AppName');
+app.setAppUserModelId('com.otctrade.app');
 
 // Uncomment this before publishing your first version.
 // It's commented out as it throws an error if there are no published versions.
@@ -47,7 +47,7 @@ const createMainWindow = async () => {
     mainWindow = undefined;
   });
 
-  await win.loadFile(path.join(__dirname, 'index.html'));
+  await win.loadFile(path.join(__dirname, 'src/public/app.html'));
 
   return win;
 };
