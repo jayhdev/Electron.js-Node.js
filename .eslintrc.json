@@ -18,9 +18,19 @@
     "no-unreachable": "warn",
     "no-unused-vars": "warn",
     "no-underscore-dangle": "off",
+    "func-names": "off",
+    "no-restricted-globals": "off",
     "max-classes-per-file": "off"
   },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jquery": true
+  },
   "globals": {
+    "location": true,
     "Promise": true
   }
 }
