@@ -1,14 +1,13 @@
 {
   "name": "app-name",
-  "productName": "App Name",
+  "productName": "OTC Trade Desktop",
   "version": "0.0.0",
-  "description": "The best app ever",
+  "description": "Desktop client for OTC Trade",
   "license": "MIT",
-  "repository": "sindresorhus/electron-boilerplate",
+  "repository": "OTC-Trade/otc-trade",
   "author": {
-    "name": "Your Name",
-    "email": "user@gmail.com",
-    "url": "https://sindresorhus.com"
+    "name": "Emil Alexandrescu",
+    "email": "emil.alexandreksu@gmail.com"
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
@@ -22,10 +21,13 @@
   "dependencies": {
     "electron-context-menu": "^0.12.1",
     "electron-debug": "^3.0.0",
+    "electron-log": "^3.0.7",
     "electron-store": "^3.3.0",
     "electron-unhandled": "^2.2.0",
     "electron-updater": "^4.0.6",
-    "electron-util": "^0.12.0"
+    "electron-util": "^0.12.0",
+    "fs-jetpack": "^2.2.2",
+    "jquery": "^3.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -49,7 +51,7 @@
     "releaseDraft": false
   },
   "build": {
-    "appId": "com.company.AppName",
+    "appId": "com.otctrade.app",
     "mac": {
       "category": "public.app-category.social-networking",
       "darkModeSupport": true
