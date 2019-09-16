@@ -1,5 +1,6 @@
 const { app, Menu, shell } = require('electron');
 const { is } = require('electron-util');
+const log = require('electron-log');
 const config = require('./config');
 
 const debugSubmenu = [
@@ -13,6 +14,12 @@ const debugSubmenu = [
     label: 'Show App Data',
     click() {
       shell.openItem(app.getPath('userData'));
+    }
+  },
+  {
+    label: `Show Logs Location`,
+    click: () => {
+      shell.showItemInFolder(log.transports.file.file);
     }
   },
   {
