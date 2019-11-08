@@ -1,9 +1,9 @@
 const { ipcRenderer, remote } = require('electron');
 const { EventEmitter } = require('events');
-const tray = require('./tray');
 const log = remote.require('electron-log');
+const tray = require('./tray');
 
-const APP_URL = 'https://app.otctrade.com';
+const APP_URL = 'https://app.pokerswaps.com';
 
 class WebView extends EventEmitter {
   constructor() {
