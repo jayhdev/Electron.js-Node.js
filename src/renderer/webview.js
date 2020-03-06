@@ -3,7 +3,8 @@ const { EventEmitter } = require('events');
 const log = remote.require('electron-log');
 const tray = require('./tray');
 
-const APP_URL = 'https://app.pokerswaps.com';
+// const APP_URL = 'https://app.pokerswaps.com';
+const APP_URL = "http://localhost:3000";
 
 class WebView extends EventEmitter {
   constructor() {

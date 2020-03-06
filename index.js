@@ -50,7 +50,7 @@ const createMainWindow = async () => {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      devTools: false
+      devTools: true
     }
   });
 
