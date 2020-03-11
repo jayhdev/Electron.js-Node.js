@@ -13,11 +13,11 @@ class NullNotification {
   }
 
   show() {
-    log.info(`Null notification show called`);
+    log.info('Null notification show called');
   }
 
   close() {
-    log.info(`Null notification close called`);
+    log.info('Null notification close called');
   }
 }
 
