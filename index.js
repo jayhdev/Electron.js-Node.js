@@ -50,7 +50,8 @@ const createMainWindow = async () => {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      devTools: true
+      devTools: true,
+      // preload: path.join(__dirname, "src/preload.js")
     }
   });
 
@@ -137,6 +138,14 @@ app.on('window-all-closed', () => {
       afterMainWindow(mainWindow);
     }
   });
+
+  ipcMain.on('badge-show', () => {
+    app.dock.setBadge('.');
+  });
+
+  ipcMain.on('badge-hide', () => {
+    app.setBadgeCount(0);
+  })
 
   log.info(`Logging to: ${log.transports.file.file}`);
 })();

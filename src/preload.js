@@ -1,4 +1,5 @@
 const { ipcRenderer, shell, remote } = require('electron');
+const log = remote.require('electron-log');
 const Notification = require('./lib/Notification');
 const NullNotification = require('./lib/NullNotification');
 
@@ -18,7 +19,25 @@ EVENTS.forEach(function(e) {
 });
 
 window.onload = function() {
+  log.info('preload onloaded');
   const $ = require('jquery');
+
+  // New
+  function onClickBellIcon() {
+    $('.topbar-bell__button').click(function() {
+      if ($('.topbar-notification__alert').length) {
+        setTimeout(() => {
+          ipcRenderer.sendToHost('badge-hide');
+        }, 5000);
+      }
+    });
+  }
+
+  function removeFooter() {
+    $('.footer').remove();
+    onClickBellIcon();
+  }
+
   function checkExternalUrl(e) {
     const href = $(this).attr('href');
     const external = $(this).attr('target') === '_blank';
@@ -62,5 +81,6 @@ window.onload = function() {
     }
   }
 
+  $(document).ready(removeFooter);
   $(document).on('click', 'a', checkExternalUrl);
 };

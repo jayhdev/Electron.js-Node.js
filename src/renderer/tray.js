@@ -55,7 +55,7 @@ function createAppTray() {
       typeof mainWindow.webContents.executeJavascript === 'function'
     ) {
       mainWindow.webContents.executeJavascript(
-        `window.dispatchEvent(new CustomEvent("webview-focus");`
+        'window.dispatchEvent(new CustomEvent("webview-focus");'
       );
     }
   };

@@ -4,7 +4,7 @@ const log = remote.require('electron-log');
 const tray = require('./tray');
 
 // const APP_URL = 'https://app.pokerswaps.com';
-const APP_URL = "http://localhost:3000";
+const APP_URL = 'http://localhost:3000';
 
 class WebView extends EventEmitter {
   constructor() {
@@ -20,7 +20,7 @@ class WebView extends EventEmitter {
 
     log.info(`server url is ${APP_URL}`);
     webviewObj.setAttribute('server', APP_URL);
-    // webviewObj.setAttribute('preload', './preload.js');
+    webviewObj.setAttribute('preload', '../preload.js');
     webviewObj.setAttribute('allowpopups', 'on');
     webviewObj.setAttribute('disablewebsecurity', 'on');
     webviewObj.setAttribute(
@@ -34,12 +34,17 @@ class WebView extends EventEmitter {
 
     webviewObj.addEventListener('ipc-message', event => {
       this.emit(`ipc-message-${event.channel}`, event.args);
-      log.info(`webview ipc: ${event.channel}`);
       if (event.args && event.args.length) {
         log.info(`webview args: ${event.args}`);
       }
 
       switch (event.channel) {
+        case 'unmute':
+          ipcRenderer.send('badge-show');
+          break;
+        case 'badge-hide':
+          ipcRenderer.send('badge-hide');
+          break;
         case 'unread-changed': {
           const badge = event.args[0];
           this.badge = badge;
@@ -129,7 +134,7 @@ class WebView extends EventEmitter {
 
   sendToRenderer(action, payload) {
     if (!this.webviewObj) {
-      log.info(`webview not initialized yet to send event to renderer`);
+      log.info('webview not initialized yet to send event to renderer');
       return;
     }
 
