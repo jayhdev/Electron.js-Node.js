@@ -21,7 +21,7 @@ debug();
 contextMenu();
 
 // Note: Must match `build.appId` in package.json
-app.setAppUserModelId('com.pokerswaps.app');
+app.setAppUserModelId('com.otctrade.app');
 
 // Uncomment this before publishing your first version.
 // It's commented out as it throws an error if there are no published versions.
@@ -46,12 +46,13 @@ const createMainWindow = async () => {
     width: 1200,
     height: 925,
     show: false,
+    icon: path.join(__dirname, 'build/icon.png'),
     frame: process.platform !== 'win32',
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
       devTools: true,
-      // preload: path.join(__dirname, "src/preload.js")
+      // preload: path.join(__dirname, 'src/preload.js')
     }
   });
 
@@ -86,7 +87,7 @@ app.on('window-all-closed', () => {
   Menu.setApplicationMenu(menu);
   mainWindow = await createMainWindow();
 
-  mainWindow.isIntitialLoaded = false;
+  // mainWindow.isIntitialLoaded = false;
 
   splashWindow = new BrowserWindow({
     width: 300,
@@ -134,6 +135,8 @@ app.on('window-all-closed', () => {
       splashWindow.destroy();
 
       mainWindow.show();
+      mainWindow.isIntitialLoaded = true;
+      log.info(`---mainwindow-initial---${mainWindow.isIntitialLoaded}`);
 
       afterMainWindow(mainWindow);
     }

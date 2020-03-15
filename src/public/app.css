@@ -6,3 +6,37 @@ webview {
   right: 0;
   bottom: 0;
 }
+
+.win-webview {
+  top: 30px;
+}
+
+.titlebar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.menubar-menu-container {
+  background: #fff !important;
+  color: black;
+}
+
+.menubar-menu-container .action-item a {
+  background: white !important;
+}
+
+.menubar-menu-container .action-item a:hover {
+  color: black !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.menubar-menu-container .action-label:hover {
+  color: black !important;
+}
+
+.menubar-menu-container .action-item a .menu-item-icon {
+  display: none;
+}
+
+.menubar-menu-container .action-label.separator {
+  border-bottom-color: rgba(0, 0, 0, 0.3) !important;
+}

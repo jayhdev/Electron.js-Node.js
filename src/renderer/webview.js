@@ -1,7 +1,9 @@
 const { ipcRenderer, remote } = require('electron');
+const path = require('path');
 const { EventEmitter } = require('events');
 const log = remote.require('electron-log');
 const tray = require('./tray');
+const customTitlebar = require('custom-electron-titlebar');
 
 // const APP_URL = 'https://app.pokerswaps.com';
 const APP_URL = 'http://localhost:3000';
@@ -18,6 +20,9 @@ class WebView extends EventEmitter {
     const webviewObj = document.createElement('webview');
     this.webviewObj = webviewObj;
 
+    const browserWindow = remote.getCurrentWindow();
+    const rootPath = remote.app.getAppPath();
+
     log.info(`server url is ${APP_URL}`);
     webviewObj.setAttribute('server', APP_URL);
     webviewObj.setAttribute('preload', '../preload.js');
@@ -27,6 +32,14 @@ class WebView extends EventEmitter {
       'class',
       process.platform === 'win32' ? 'win-webview' : ''
     );
+
+    const iconPath = path.join(rootPath, 'build/images', 'windows', 'icon-tray.png');
+    const titleBar = new customTitlebar.Titlebar({
+      backgroundColor: customTitlebar.Color.fromHex('#fcfcfc'),
+      hideWhenClickingClose: true,
+      unfocusEffect: true,
+    });
+    titleBar.updateIcon(iconPath);
 
     webviewObj.addEventListener('console-message', e => {
       log.info(e.message);
@@ -40,10 +53,22 @@ class WebView extends EventEmitter {
 
       switch (event.channel) {
         case 'unmute':
-          ipcRenderer.send('badge-show');
+          if (process.platform === 'win32') {
+            const imagePath = path.join(rootPath, 'build/images/windows/icon-tray-alert.png');
+            browserWindow.setIcon(imagePath);
+            tray.showBadgeAndTrayAlert(true);
+          } else {
+            ipcRenderer.send('badge-show');
+          }
           break;
         case 'badge-hide':
-          ipcRenderer.send('badge-hide');
+          if (process.platform === 'win32') {
+            const imagePath = path.join(rootPath, 'build/icon.png');
+            browserWindow.setIcon(imagePath);
+            tray.showBadgeAndTrayAlert(false);
+          } else {
+            ipcRenderer.send('badge-hide');
+          }
           break;
         case 'unread-changed': {
           const badge = event.args[0];
