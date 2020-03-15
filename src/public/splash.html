@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="main.css" />
-    <link rel="stylesheet" type="text/css" href="splash.css" />
-  </head>
-  <body>
-    <div class="splash">
-      <div class="splash__connecting"></div>
 
-      <div class="splash__disconnected">
-        <i class="fa fa-chain-broken splash__icon"></i>
-        <div class="splash__title">Connection Failed</div>
-        <div class="splash__desc">
-          Stitch requires an internet connection.
-          <br />
-          We will try to automatically reconnect.
-        </div>
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+  <link rel="stylesheet" type="text/css" href="splash.css" />
+</head>
+
+<body>
+  <div class="splash">
+    <div class="splash__connecting"></div>
+
+    <div class="splash__disconnected">
+      <i class="fa fa-chain-broken splash__icon"></i>
+      <div class="splash__title">Connection Failed</div>
+      <div class="splash__desc">
+        Stitch requires an internet connection.
+        <br />
+        We will try to automatically reconnect.
       </div>
     </div>
+  </div>
 
-    <script>
-      const { ipcRenderer } = require('electron');
+  <script>
+    const {
+      ipcRenderer,
+      remote
+    } = require('electron');
+    const log = require('electron-log');
 
-      ipcRenderer.on('disconnected', () => {
-        const disconnectedEl = document.querySelector('.splash__disconnected');
-        const connectingEl = document.querySelector('.splash__connecting');
-        disconnectedEl.style.display = 'block';
-        connectingEl.style.display = 'none';
-      });
+    ipcRenderer.on('disconnected', () => {
+      log.info('--splash-disconnected--');
+      const disconnectedEl = document.querySelector('.splash__disconnected');
+      const connectingEl = document.querySelector('.splash__connecting');
+      disconnectedEl.style.display = 'block';
+      connectingEl.style.display = 'none';
+    });
 
-      ipcRenderer.on('connecting', () => {
-        const disconnectedEl = document.querySelector('.splash__disconnected');
-        const connectingEl = document.querySelector('.splash__connecting');
-        disconnectedEl.style.display = 'none';
-        connectingEl.style.display = 'block';
-      });
-    </script>
-  </body>
+    ipcRenderer.on('connecting', () => {
+      log.info('--splash-connecting--');
+      const disconnectedEl = document.querySelector('.splash__disconnected');
+      const connectingEl = document.querySelector('.splash__connecting');
+      disconnectedEl.style.display = 'none';
+      connectingEl.style.display = 'block';
+    });
+
+  </script>
+</body>
+
 </html>
