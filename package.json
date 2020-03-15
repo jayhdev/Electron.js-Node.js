@@ -19,6 +19,7 @@
     "release": "np"
   },
   "dependencies": {
+    "custom-electron-titlebar": "^3.2.2-hotfix62",
     "electron-context-menu": "^0.12.1",
     "electron-debug": "^3.0.0",
     "electron-log": "^3.0.7",
