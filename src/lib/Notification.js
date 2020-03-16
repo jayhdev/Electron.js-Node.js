@@ -1,15 +1,17 @@
 const { ipcRenderer } = require('electron');
-const { getDoNotDisturb } = require('electron-notification-state');
+// const { getDoNotDisturb } = require('electron-notification-state');
 
 class Notification extends window.Notification {
   constructor(title, options) {
     super(title, options);
 
-    if (getDoNotDisturb()) {
-      ipcRenderer.sendToHost('mute');
-    } else {
-      ipcRenderer.sendToHost('unmute');
-    }
+    // if (getDoNotDisturb()) {
+    //   ipcRenderer.sendToHost('mute');
+    // } else {
+    //   ipcRenderer.sendToHost('unmute');
+    // }
+
+    ipcRenderer.sendToHost('unmute');
 
     if (process.platform === 'win32') {
       ipcRenderer.send('flash-frame');

@@ -1,10 +1,10 @@
 {
-  "name": "app-name",
-  "productName": "Pokerswaps Desktop",
-  "version": "0.0.0",
-  "description": "Desktop client for Pokerswaps",
+  "name": "otc-desktop",
+  "productName": "OTCTrade Desktop",
+  "version": "0.1.1",
+  "description": "Desktop client for OTCTrade",
   "license": "MIT",
-  "repository": "OTC-Trade/pokerswaps_desktop",
+  "repository": "OTC-Trade/otc-desktop",
   "author": {
     "name": "Emil Alexandrescu",
     "email": "emil.alexandreksu@gmail.com"
@@ -13,12 +13,14 @@
     "postinstall": "electron-builder install-app-deps",
     "lint": "xo",
     "test": "npm run lint",
-    "start": "NODE_ENV=development electron .",
+    "start": "cross-env NODE_ENV=development electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --macos --linux --windows",
+    "dist": "electron-builder --windows",
+    "dist:github": "electron-builder -p always",
     "release": "np"
   },
   "dependencies": {
+    "custom-electron-titlebar": "^3.2.2-hotfix62",
     "electron-context-menu": "^0.12.1",
     "electron-debug": "^3.0.0",
     "electron-log": "^3.0.7",
@@ -53,15 +55,14 @@
     "releaseDraft": false
   },
   "build": {
-    "appId": "com.pokerswaps.app",
+    "appId": "com.otctrade.app",
     "mac": {
       "category": "public.app-category.social-networking",
       "darkModeSupport": true
     },
     "dmg": {
       "iconSize": 160,
-      "contents": [
-        {
+      "contents": [{
           "x": 180,
           "y": 170
         },
@@ -79,6 +80,18 @@
         "deb"
       ],
       "category": "Network;Chat"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Emil Alexandrescu",
+      "repo": "OTC-Trade/otc-desktop"
     }
   }
 }

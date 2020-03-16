@@ -15,15 +15,17 @@ const icons = {
   }
 };
 
+const rootPath = remote.app.getAppPath();
+
 const _iconTray = path.join(
-  __dirname,
-  'images',
+  rootPath,
+  'build/images',
   icons[process.platform].dir,
   icons[process.platform].icon || 'icon-tray.png'
 );
 const _iconTrayAlert = path.join(
-  __dirname,
-  'images',
+  rootPath,
+  'build/images',
   icons[process.platform].dir,
   icons[process.platform].iconAlert || 'icon-tray-alert.png'
 );
@@ -35,12 +37,12 @@ function createAppTray() {
   const focusWindow = () => {
     log.info('tray: Focusing on main window');
 
-    if (!mainWindow.isIntitialLoaded) {
-      log.info(
-        'tray: main window is not initially loaded yet. ignoring focus request.'
-      );
-      return;
-    }
+    // if (!mainWindow.isIntitialLoaded) {
+    //   log.info(
+    //     'tray: main window is not initially loaded yet. ignoring focus request.'
+    //   );
+    //   return;
+    // }
 
     if (mainWindow.noTeams) {
       log.info('tray: no teams yet. ignoring focus request');
@@ -55,7 +57,7 @@ function createAppTray() {
       typeof mainWindow.webContents.executeJavascript === 'function'
     ) {
       mainWindow.webContents.executeJavascript(
-        `window.dispatchEvent(new CustomEvent("webview-focus");`
+        'window.dispatchEvent(new CustomEvent("webview-focus");'
       );
     }
   };
@@ -131,14 +133,14 @@ function createAppTray() {
   };
 }
 
-function setOverlayIconWin32(text) {
-  let _icon = path.join(__dirname, 'images', 'windows', `icon-${text}.png`);
-  if (text.length > 1) {
-    _icon = path.join(__dirname, 'images', 'windows', 'icon-9Plus.png');
-  }
+// function setOverlayIconWin32(text) {
+//   let _icon = path.join(rootPath, 'build/images', 'windows', `icon-${text}.png`);
+//   if (text.length > 1) {
+//     _icon = path.join(rootPath, 'build/images', 'windows', 'icon-9Plus.png');
+//   }
 
-  mainWindow.setOverlayIcon(remote.nativeImage.createFromPath(_icon), text);
-}
+//   mainWindow.setOverlayIcon(remote.nativeImage.createFromPath(_icon), text);
+// }
 
 function showBadgeAndTrayAlert(badge) {
   switch (process.platform) {
@@ -151,11 +153,11 @@ function showBadgeAndTrayAlert(badge) {
         mainWindow.tray.setImage(_iconTray);
       }
 
-      if (badge && badge !== '•') {
-        setOverlayIconWin32(badge);
-      } else {
-        mainWindow.setOverlayIcon(null, '');
-      }
+      // if (badge && badge !== '•') {
+      //   setOverlayIconWin32(badge);
+      // } else {
+      //   mainWindow.setOverlayIcon(null, '');
+      // }
       break;
 
     default:
