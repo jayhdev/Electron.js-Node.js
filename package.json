@@ -1,7 +1,7 @@
 {
   "name": "otc-desktop",
   "productName": "OTCTrade Desktop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Desktop client for OTCTrade",
   "license": "MIT",
   "repository": "OTC-Trade/otc-desktop",
