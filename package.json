@@ -15,7 +15,8 @@
     "test": "npm run lint",
     "start": "cross-env NODE_ENV=development electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --macos --linux --windows",
+    "dist": "electron-builder --windows",
+    "dist:github": "electron-builder -p always",
     "release": "np"
   },
   "dependencies": {
@@ -79,6 +80,18 @@
         "deb"
       ],
       "category": "Network;Chat"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Emil Alexandrescu",
+      "repo": "OTC-Trade/otc-desktop"
     }
   }
 }
