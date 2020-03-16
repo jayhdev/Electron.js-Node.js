@@ -29,7 +29,6 @@
     const log = require('electron-log');
 
     ipcRenderer.on('disconnected', () => {
-      log.info('--splash-disconnected--');
       const disconnectedEl = document.querySelector('.splash__disconnected');
       const connectingEl = document.querySelector('.splash__connecting');
       disconnectedEl.style.display = 'block';
@@ -37,7 +36,6 @@
     });
 
     ipcRenderer.on('connecting', () => {
-      log.info('--splash-connecting--');
       const disconnectedEl = document.querySelector('.splash__disconnected');
       const connectingEl = document.querySelector('.splash__connecting');
       disconnectedEl.style.display = 'none';
