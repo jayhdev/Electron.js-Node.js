@@ -54,7 +54,7 @@ class WebView extends EventEmitter {
       switch (event.channel) {
         case 'unmute':
           if (process.platform === 'win32') {
-            const imagePath = path.join(rootPath, 'build/images/windows/icon-tray-alert.png');
+            const imagePath = path.join(rootPath, 'build/icon-alert.png');
             browserWindow.setIcon(imagePath);
             tray.showBadgeAndTrayAlert(true);
           } else {
