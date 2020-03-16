@@ -1,9 +1,12 @@
 const { ipcRenderer, remote } = require('electron');
+const path = require('path');
 const { EventEmitter } = require('events');
 const log = remote.require('electron-log');
 const tray = require('./tray');
+const customTitlebar = require('custom-electron-titlebar');
 
-const APP_URL = 'https://app.pokerswaps.com';
+// const APP_URL = 'https://app.pokerswaps.com';
+const APP_URL = 'http://localhost:3000';
 
 class WebView extends EventEmitter {
   constructor() {
@@ -17,9 +20,12 @@ class WebView extends EventEmitter {
     const webviewObj = document.createElement('webview');
     this.webviewObj = webviewObj;
 
+    const browserWindow = remote.getCurrentWindow();
+    const rootPath = remote.app.getAppPath();
+
     log.info(`server url is ${APP_URL}`);
     webviewObj.setAttribute('server', APP_URL);
-    // webviewObj.setAttribute('preload', './preload.js');
+    webviewObj.setAttribute('preload', '../preload.js');
     webviewObj.setAttribute('allowpopups', 'on');
     webviewObj.setAttribute('disablewebsecurity', 'on');
     webviewObj.setAttribute(
@@ -27,18 +33,43 @@ class WebView extends EventEmitter {
       process.platform === 'win32' ? 'win-webview' : ''
     );
 
+    const iconPath = path.join(rootPath, 'build/images', 'windows', 'icon-tray.png');
+    const titleBar = new customTitlebar.Titlebar({
+      backgroundColor: customTitlebar.Color.fromHex('#fcfcfc'),
+      hideWhenClickingClose: true,
+      unfocusEffect: true,
+    });
+    titleBar.updateIcon(iconPath);
+
     webviewObj.addEventListener('console-message', e => {
       log.info(e.message);
     });
 
     webviewObj.addEventListener('ipc-message', event => {
       this.emit(`ipc-message-${event.channel}`, event.args);
-      log.info(`webview ipc: ${event.channel}`);
       if (event.args && event.args.length) {
         log.info(`webview args: ${event.args}`);
       }
 
       switch (event.channel) {
+        case 'unmute':
+          if (process.platform === 'win32') {
+            const imagePath = path.join(rootPath, 'build/icon-alert.png');
+            browserWindow.setIcon(imagePath);
+            tray.showBadgeAndTrayAlert(true);
+          } else {
+            ipcRenderer.send('badge-show');
+          }
+          break;
+        case 'badge-hide':
+          if (process.platform === 'win32') {
+            const imagePath = path.join(rootPath, 'build/icon.png');
+            browserWindow.setIcon(imagePath);
+            tray.showBadgeAndTrayAlert(false);
+          } else {
+            ipcRenderer.send('badge-hide');
+          }
+          break;
         case 'unread-changed': {
           const badge = event.args[0];
           this.badge = badge;
@@ -128,7 +159,7 @@ class WebView extends EventEmitter {
 
   sendToRenderer(action, payload) {
     if (!this.webviewObj) {
-      log.info(`webview not initialized yet to send event to renderer`);
+      log.info('webview not initialized yet to send event to renderer');
       return;
     }
 

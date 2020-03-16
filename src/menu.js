@@ -17,7 +17,7 @@ const debugSubmenu = [
     }
   },
   {
-    label: `Show Logs Location`,
+    label: 'Show Logs Location',
     click: () => {
       shell.showItemInFolder(log.transports.file.file);
     }
