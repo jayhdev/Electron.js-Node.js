@@ -1,4 +1,4 @@
-# pokerswaps-desktop
+# Electron.js desktop
 
 ## Install
 
