@@ -86,9 +86,7 @@
       "oneClick": false
     },
     "publish": {
-      "provider": "github",
-      "owner": "Emil Alexandrescu",
-      "repo": "OTC-Trade/otc-desktop"
+      "provider": "github"
     }
   }
 }
